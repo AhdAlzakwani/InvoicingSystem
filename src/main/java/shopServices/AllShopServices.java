@@ -5,6 +5,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
@@ -133,7 +135,7 @@ public class AllShopServices {
 	                System.out.println("Please Enter Shop Name To be Insert :");
 		        	String shop_name = scanner.next();
 
-	                    String insertSerctionTable = SQLQueries.getInsertIntoSectionTable(shop_name);
+	                    String insertSerctionTable = SQLQueries.getInsertIntoShopTable(shop_name);
 
 	                    Statement st = insertConnection.createStatement();
 
@@ -144,6 +146,79 @@ public class AllShopServices {
 	                    } else {
 	                        System.out.println(" Date Inserted already Created in given database...");
 	                    }
+	                }
+	                    insertConnection.close();
+	                
+	                
+	            }
+	        
+	        } catch (Exception ex) {
+	            System.err.println(ex);
+	        }
+	    }
+
+	   public void insertIntoShopDetailsTable(int shopNumberToInsert, String Shop_Name){
+	        try {
+	        	Scanner scanner = new Scanner(System.in);
+
+	        	
+	        	
+	        	System.out.println("Please Enter Database URl");
+	        	String inputUserUrl = scanner.next();
+	        	System.out.println("Please Enter user Name :");
+	        	String inputUserName = scanner.next();
+	        	System.out.println("Please Enter user Password :");
+	        	String inputUserPass = scanner.next();
+	        		        
+
+	                Connection insertConnection = null;
+
+	                Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER)
+	                        .newInstance();
+	                DriverManager.registerDriver(driver);
+	                
+	                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
+	                	
+	                	
+	                insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
+	                for(int i=0; i<shopNumberToInsert;i++) {
+	                	System.out.println("Please Enter Tel :");
+	                    String tel = scanner.next();
+	                    System.out.println("Please Enter Fax :");
+	                    String fax = scanner.next();
+	                    System.out.println("Please Enter Email :");
+	                    String email = scanner.next();
+	                    System.out.println("Please Enter Website :");
+	                    String website = scanner.next();
+	                
+	                	String Sql = "SELECT id FROM Shop Where Shop_Name=?";
+	    	        	
+
+	                     PreparedStatement shopPreparedStatment = insertConnection.prepareStatement(Sql); 
+	                     shopPreparedStatment.setString(1, Shop_Name);
+	                     int shopId = 0;
+	                     
+	                     ResultSet shopResultSet = shopPreparedStatment.executeQuery();
+	                     if(shopResultSet.next())
+	                     {
+	                    	 shopId = shopResultSet.getInt("id");
+	 	                    System.out.println(shopId);
+
+	                     }
+	                     
+	                    String insertSerctionTable = SQLQueries.getInsertIntoShopDetailsTable(tel, fax, email, website,shopId);
+	                    PreparedStatement stmt=insertConnection.prepareStatement(insertSerctionTable);
+                        stmt.setString(1, tel);
+                        stmt.setString(2, fax);
+                        stmt.setString(3, fax);
+                        stmt.setString(4, website);
+                        stmt.setInt(5, shopId);
+                         stmt.executeQuery();
+                        
+    	                    System.out.println("Inserted Successfuly");
+
+                        
+	                
 	                }
 	                    insertConnection.close();
 	                

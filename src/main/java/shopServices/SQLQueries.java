@@ -1,5 +1,7 @@
 package shopServices;
 
+import java.sql.Date;
+
 public class SQLQueries {
 	public static String CREATE_TABLE_SHOP = "CREATE TABLE Shop " + "(id INTEGER Identity(1,1), "
 			+ " Shop_Name VARCHAR(5000),"
@@ -36,9 +38,27 @@ public class SQLQueries {
 	
 
 
-	public static String getInsertIntoSectionTable(String shop_name) {
+	public static String getInsertIntoShopTable(String shop_name) {
 		String INSERT_TABLE_SHOP = "insert into Shop (Shop_Name)VALUES('"+shop_name+"')";
 		return INSERT_TABLE_SHOP;
 	}
 
+	
+	public static String getInsertIntoShopDetailsTable(String tel, String fax, String Email,String website, Integer shop_id) {
+		
+		String INSERT_TABLE_SHOP = "insert into Shop_Details (Tel, Fax, Email, Website, Shop_id)VALUES(?,?,?,?,?)";
+		return INSERT_TABLE_SHOP;
+	}
+	
+public static String getInsertIntoItemsTable(String item_Name, Double price, Integer quantity,Integer Shop_Details_id) {
+		
+		String INSERT_TABLE_SHOP = "insert into Items (item_Name, price, quantity, Shop_Details_id)VALUES(?,?,?,?)";
+		return INSERT_TABLE_SHOP;
+	}
+
+public static String getInsertIntoInvoicTable(String customer_full_name, Integer phone_number, Date invoice_date,Integer number_of_items,double total_amount,double  paid_amount, Integer Items_id) {
+	
+	String INSERT_TABLE_SHOP = "insert into Invoice (Tel, Fax, Email, Website, Shop_id)VALUES(?,?,?,?,?,?,?)";
+	return INSERT_TABLE_SHOP;
+}
 }

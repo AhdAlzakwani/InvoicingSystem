@@ -49,6 +49,24 @@ public class Main {
 						allShopServices.createShopDetailsTable();
 						break;
 					case 1:
+						System.out.println("Do you want to insert Items? If yes, press 1 , if you want to insert invoices, then press 2");
+						Integer InsertOption = scannerMenu.nextInt();
+						if(InsertOption == 1)
+						{
+							System.out.println("How many Item You want to Insert ?");
+							Integer itemsNumberToInsert = scannerMenu.nextInt();
+							System.out.println("Please Enter Shop_Name :");
+		                    String shop_name = scannerMenu.next();
+							allItemServices.insertIntoItemTable(itemsNumberToInsert, shop_name);
+						}
+						else if(InsertOption == 2)
+						{
+							
+						}
+						else {
+							System.out.println("Only 1 Or 2");
+
+						}
 
 						break;
 					case 2:
@@ -59,7 +77,12 @@ public class Main {
 
 						break;
 					case 3:
-
+						System.out.println("How many Shop You want to Insert ?");
+						Integer shopDetailsNumberToInsert = scannerMenu.nextInt();
+						System.out.println("Please Enter Shop_Name :");
+	                    String shop_name = scannerMenu.next();
+						allShopServices.insertIntoShopDetailsTable(shopDetailsNumberToInsert,shop_name);
+						
 						break;
 					case 4:
 						exitFlagMainMenu = true;
@@ -88,7 +111,11 @@ public class Main {
 						allItemServices.createItemTable();
 						break;
 					case 1:
-						
+						System.out.println("How many Shop You want to Insert ?");
+						Integer itemsNumberToInsert = scannerMenu.nextInt();
+						System.out.println("Please Enter Shop_Name :");
+	                    String shop_name = scannerMenu.next();
+						allItemServices.insertIntoItemTable(itemsNumberToInsert, shop_name);
 
 						break;
 					case 2:

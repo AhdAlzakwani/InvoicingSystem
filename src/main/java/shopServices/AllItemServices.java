@@ -3,56 +3,115 @@ package shopServices;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Scanner;
 
 public class AllItemServices {
-	 public static List<String> getShopItemSettings() {
+	public static List<String> getShopItemSettings() {
 
+		return Arrays.asList("0- Create Items Table", "1- Add Items", "2- Delete Items", "3- Change Item Price ",
+				"4- Report All Items ", "5- Go Back");
 
-	        return Arrays.asList("0- Create Items Table",
-	        		"1- Add Items",
-	                "2- Delete Items",
-	                "3- Change Item Price ",
-	                "4- Report All Items ",
-	                "5- Go Back"
-	        );
+	}
 
-	    }
-	 
-	    public void createItemTable() {
+	public void createItemTable() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please Enter Database URl");
+		String inputUserUrl = scanner.next();
+		System.out.println("Please Enter user Name :");
+		String inputUserName = scanner.next();
+		System.out.println("Please Enter user Password :");
+		String inputUserPass = scanner.next();
 
+		Connection Sectionsconn = null;
+		try {
 
-	        Connection Sectionsconn = null;
-	        try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
+					&& inputUserPass.equals(Constants.USER_PASSWORD)) {
 
-	            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-	                    .newInstance();
-	            DriverManager.registerDriver(driver);
-	            Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
-            Statement st = Sectionsconn.createStatement();
-	            int m = st.executeUpdate(SQLQueries.CREATE_TABLE_Items);
-	            if (m >= 1) {
-	                System.out.println("Created Sections table in given database...");
+				Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
+				Statement st = Sectionsconn.createStatement();
+				int m = st.executeUpdate(SQLQueries.CREATE_TABLE_Items);
+				if (m >= 1) {
+					System.out.println("Created Sections table in given database...");
 
-	            } else {
-	                System.out.println(" table already Created in given database...");
-	            }
-	            Sectionsconn.close();
-	        } catch (Exception ex) {
-	            System.err.println(ex);
-	        }
+				} else {
+					System.out.println(" table already Created in given database...");
+				}
+				Sectionsconn.close();
+			}
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
 
+	}
 
+	public void insertIntoItemTable(int shopNumberToInsert, String Shop_Name) {
+		try {
+			Scanner scanner = new Scanner(System.in);
 
+			System.out.println("Please Enter Database URl");
+			String inputUserUrl = scanner.next();
+			System.out.println("Please Enter user Name :");
+			String inputUserName = scanner.next();
+			System.out.println("Please Enter user Password :");
+			String inputUserPass = scanner.next();
 
-	    }
-	 
-	 
-	 
-	 
-	 
-	 
+			Connection insertConnection = null;
+
+			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
+			DriverManager.registerDriver(driver);
+
+			if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
+					&& inputUserPass.equals(Constants.USER_PASSWORD)) {
+
+				insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
+				for (int i = 0; i < shopNumberToInsert; i++) {
+					System.out.println("Please Enter Item Name :");
+					String item_name = scanner.next();
+					System.out.println("Please Enter Price :");
+					Double price = scanner.nextDouble();
+					System.out.println("Please Enter quantity :");
+					Integer quantity = scanner.nextInt();
+
+					String Sql = "Select Shop_Details.id from Shop_Details INNER JOIN Shop On Shop_Details.Shop_id= Shop.id Where Shop.Shop_Name =?";
+
+					PreparedStatement shopPreparedStatment = insertConnection.prepareStatement(Sql);
+					shopPreparedStatment.setString(1, Shop_Name);
+					int shopId = 0;
+
+					ResultSet shopResultSet = shopPreparedStatment.executeQuery();
+					if (shopResultSet.next()) {
+						shopId = shopResultSet.getInt("id");
+						System.out.println(shopId);
+
+					}
+
+					String insertSerctionTable = SQLQueries.getInsertIntoItemsTable(item_name, price, quantity, shopId);
+					PreparedStatement stmt = insertConnection.prepareStatement(insertSerctionTable);
+					stmt.setString(1, item_name);
+					stmt.setDouble(2, price);;
+					stmt.setInt(3, quantity);
+					stmt.setInt(4, shopId);
+					stmt.executeQuery();
+
+					System.out.println("Inserted Successfuly");
+
+				}
+				insertConnection.close();
+
+			}
+
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
 }
