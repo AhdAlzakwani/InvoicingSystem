@@ -2,7 +2,9 @@ package invoiceSys;
 
 import java.util.Scanner;
 
+import shopServices.AllItemServices;
 import shopServices.AllShopServices;
+import shopServices.InvoiceDetails;
 
 public class Main {
 
@@ -10,10 +12,14 @@ public class Main {
 
 		Scanner scannerMenu = new Scanner(System.in);
 		AllShopServices allShopServices = new AllShopServices();
+		AllItemServices allItemServices = new AllItemServices();
+		InvoiceDetails details = new InvoiceDetails();
 
 		boolean exitFlagMainMenu = true;
 		boolean exitFlagShopSittingMenu = true;
 		boolean exitFlagShopItemSittingMenu = true;
+		
+		
 		while (exitFlagMainMenu) {
 
 			for (String x : Menu.getMenuArray()) {
@@ -46,6 +52,10 @@ public class Main {
 
 						break;
 					case 2:
+						System.out.println("How many Shop You want to Insert ?");
+						Integer shopNumberToInsert = scannerMenu.nextInt();
+						allShopServices.insertIntoShopTable(shopNumberToInsert);
+						
 
 						break;
 					case 3:
@@ -65,7 +75,7 @@ public class Main {
 			case 2:
 				while (exitFlagShopItemSittingMenu) {
 
-					for (String x : AllShopServices.getShopSettings()) {
+					for (String x : allItemServices.getShopItemSettings()) {
 						System.out.println(x);
 					}
 					System.out.println("WELCOME TO SHOP ITEM SITTING");
@@ -74,7 +84,9 @@ public class Main {
 					System.out.println("************************");
 					Integer optionForShopSittingMenu = scannerMenu.nextInt();
 					switch (optionForShopSittingMenu) {
-
+					case 0:
+						allItemServices.createItemTable();
+						break;
 					case 1:
 						
 
@@ -100,6 +112,7 @@ public class Main {
 
 				break;
 			case 3:
+				details.createInvoiceTable();
 
 				break;
 			case 4:

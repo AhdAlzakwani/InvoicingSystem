@@ -18,9 +18,27 @@ public class SQLQueries {
 	
 	
 	public static String CREATE_TABLE_Items = "CREATE TABLE Items " + "(id INTEGER Identity(1,1), "
-			+ " item_Name VARCHAR(5000),"
-			+ " price double(5000),"
+			+ " item_Name VARCHAR(50),"
+			+ " price float,"
+			+ " quantity INTEGER,"
 			+ " Shop_Details_id INTEGER foreign key references Shop_Details(id), "
 			+ " PRIMARY KEY ( id ))";
+	
+	public static String CREATE_TABLE_Invoice = "CREATE TABLE Invoice " + "(id INTEGER Identity(1,1), "
+			+ " customer_full_name VARCHAR(500),"
+			+ " phone_number INTEGER,"
+			+ " invoice_date date,"
+			+ " number_of_items INTEGER,"
+			+ " total_amount float,"
+			+ " paid_amount float,"
+			+ " Items_id INTEGER foreign key references Items(id), "
+			+ " PRIMARY KEY ( id ))";
+	
+
+
+	public static String getInsertIntoSectionTable(String shop_name) {
+		String INSERT_TABLE_SHOP = "insert into Shop (Shop_Name)VALUES('"+shop_name+"')";
+		return INSERT_TABLE_SHOP;
+	}
 
 }
