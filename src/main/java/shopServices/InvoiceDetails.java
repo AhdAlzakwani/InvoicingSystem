@@ -326,4 +326,90 @@ public class InvoiceDetails {
 
 			
 			}
+	 
+	 public static void reportTable() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+			Scanner scanner = new Scanner(System.in);
+
+			System.out.println("Please Enter Database URl");
+			String inputUserUrl = scanner.next();
+			System.out.println("Please Enter user Name :");
+			String inputUserName = scanner.next();
+			System.out.println("Please Enter user Password :");
+			String inputUserPass = scanner.next();
+		    Connection conn = null;
+
+			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
+			DriverManager.registerDriver(driver);
+
+			String sqlDB = "Select COUNT(*) from Items";
+			String sqlDB1 = "Select COUNT(*) from Invoice";
+			String sqlDB2 = "Select SUM(total_amount)from Invoice";
+
+			try {
+
+				conn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
+
+				Statement st = conn.createStatement();
+
+				ResultSet m = st.executeQuery(sqlDB);
+
+				if (m.next()) {
+
+					do {
+
+						System.out.println("No_Of_Items : " + m.getInt(1));
+						System.out.println("*********************************");
+
+					} while (m.next());
+
+				} else {
+					System.out.println("No such user id is already registered");
+				}
+				
+				
+				ResultSet n = st.executeQuery(sqlDB1);
+
+				if (n.next()) {
+
+					do {
+
+						System.out.println("No_of_Invoices : " + n.getInt(1));
+						System.out.println("*********************************");
+
+					} while (n.next());
+
+				} else {
+					System.out.println("No such user id is already registered");
+				}
+				
+				ResultSet h = st.executeQuery(sqlDB2);
+
+				if (h.next()) {
+
+					do {
+
+						System.out.println("Total_Sales : " + h.getInt(1));
+						System.out.println("*********************************");
+
+					} while (h.next());
+
+				} else {
+					System.out.println("No such user id is already registered");
+				}
+				
+
+				conn.close();
+			}
+			
+
+			catch (Exception ex) {
+				System.err.println(ex);
+			}
+
+			
+			}
+	 
+	 
+	 
 }
