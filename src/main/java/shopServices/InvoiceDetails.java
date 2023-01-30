@@ -52,10 +52,10 @@ public class InvoiceDetails {
 	 
 	
 	
-	 public void insertIntoShopDetailsTable(int shopNumberToInsert, String Shop_Name){
+	 public void insertIntoShopDetailsTable(int shopNumberToInsert, String itemName){
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
-
+	        
 	        	
 	        	
 	        	System.out.println("Please Enter Database URl");
@@ -77,37 +77,121 @@ public class InvoiceDetails {
 	                	
 	                insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 	                for(int i=0; i<shopNumberToInsert;i++) {
-	                	System.out.println("Please Enter customer_full_name :");
-	                    String customer_full_name = scanner.next();
+	                	System.out.println("Please Enter customer First name :");
+	                    String customer_first_name = scanner.next();
+	                    System.out.println("Please Enter customer Last name :");
+	                    String customer_last_name = scanner.next();
+	                    String customer_full_name = customer_first_name +""+customer_last_name;
 	                    System.out.println("Please Enter phone_number :");
 	                    Integer phone_number = scanner.nextInt();
+	                    System.out.println("How many you give the Counter  :");
+	                    Integer balance = scanner.nextInt();
 	                   Date invoice_date = new Date(System.currentTimeMillis());
-	                    System.out.println("Please Enter number_of_items :");
-	                    Integer number_of_items = scanner.nextInt();
+	                 
 	                    
 	                
-	                	String Sql = "Select Shop_Details.id from Shop_Details INNER JOIN Shop On Shop_Details.Shop_id= Shop.id Where Shop.Shop_Name =?"
-	                			+ "";
-	    	        	
+	                    String sqlnumberOfItem = "Select COUNT(*) from Items where item_Name=?";
+	                    String sqlTotaleAmount = "Select price*(quantity) from Items where item_Name=?";
+	                    String sqlPaidAmount ="Select price From Items where item_Name=?";
+	                    String sqlBalance = "Select price From Items where item_Name=?";
+	                    String sqlItemId = "Select id From Items where item_Name=?";
 
-	                     PreparedStatement shopPreparedStatment = insertConnection.prepareStatement(Sql); 
-	                     shopPreparedStatment.setString(1, Shop_Name);
-	                     int shopId = 0;
+	                
+	    	        	//Create PreparedStatement For numberOfItem
+
+	                     PreparedStatement numberOfItemPreparedStatment = insertConnection.prepareStatement(sqlnumberOfItem); 
+	                     numberOfItemPreparedStatment.setString(1, itemName);
 	                     
-	                     ResultSet shopResultSet = shopPreparedStatment.executeQuery();
-	                     if(shopResultSet.next())
+	                     int count = 0;
+	                     
+	                     ResultSet numberOfItemResultSet = numberOfItemPreparedStatment.executeQuery();
+	                     if(numberOfItemResultSet.next())
 	                     {
-	                    	 shopId = shopResultSet.getInt("id");
-	 	                    System.out.println(shopId);
+	                    	 
+	                    	 count = numberOfItemResultSet.getInt(1);
+	 	                    System.out.println("numberOfItem is :"+count);
 
 	                     }
 	                     
-	                    String insertSerctionTable = SQLQueries.getInsertIntoInvoicTable(customer_full_name, phone_number, invoice_date, number_of_items,shopId);
-	                    PreparedStatement stmt=insertConnection.prepareStatement(insertSerctionTable);
+	                     
+	                   //Create PreparedStatement For totaleAmount
+	                     PreparedStatement totaleAmountPreparedStatment = insertConnection.prepareStatement(sqlTotaleAmount); 
+	                     totaleAmountPreparedStatment.setString(1, itemName);
+	                     
+	                     int totaleAmountcount = 0;
+	                     
+	                     ResultSet totaleAmountResultSet = totaleAmountPreparedStatment.executeQuery();
+	                     if(totaleAmountResultSet.next())
+	                     {
+	                    	 
+	                    	 totaleAmountcount = totaleAmountResultSet.getInt(1);
+	 	                    System.out.println("totaleAmount is :"+totaleAmountcount);
+
+	                     }
+	                     
+	                   //Create PreparedStatement For PaidAmount
+	                     PreparedStatement paidAmountPreparedStatment = insertConnection.prepareStatement(sqlPaidAmount); 
+	                     paidAmountPreparedStatment.setString(1, itemName);
+	                     
+	                     int paidAmountcount = 0;
+	                     
+	                     ResultSet paidAmountResultSet = paidAmountPreparedStatment.executeQuery();
+	                     if(paidAmountResultSet.next())
+	                     {
+	                    	 
+	                    	 paidAmountcount = paidAmountResultSet.getInt(1);
+	 	                    System.out.println("paidAmount is :"+paidAmountcount);
+
+	                     }
+	                     
+	                     //Create PreparedStatement For Balance
+	                     PreparedStatement balancePreparedStatment = insertConnection.prepareStatement(sqlBalance); 
+	                     balancePreparedStatment.setString(1, itemName);
+	                     
+	                     int balancecount = 0;
+	                     Integer countBalance = 0;
+	                     ResultSet balanceResultSet = balancePreparedStatment.executeQuery();
+	                     if(balanceResultSet.next())
+	                     {
+	                    	 
+	                    	 balancecount = balanceResultSet.getInt(1);
+	 	                    System.out.println("price is :"+balancecount);
+	 	                    countBalance = balance - balancecount;
+	 	                    System.out.println("countBalance is :"+countBalance);
+
+	 	                    
+
+	                     }
+	                     
+	                   //Create PreparedStatement For itemId
+
+	                     PreparedStatement itemIdPreparedStatment = insertConnection.prepareStatement(sqlItemId); 
+	                     itemIdPreparedStatment.setString(1, itemName);
+	                     
+	                     int itemIdcount = 0;
+	                     
+	                     ResultSet itemIdResultSet = itemIdPreparedStatment.executeQuery();
+	                     if(itemIdResultSet.next())
+	                     {
+	                    	 
+	                    	 itemIdcount = itemIdResultSet.getInt("id");
+	 	                    System.out.println("itemId is :"+itemIdcount);
+
+	                     }
+	                     
+	                     
+	                     
+	                     
+	                 String insertSerctionTable = SQLQueries.getInsertIntoInvoicTable(customer_full_name, phone_number, invoice_date, count,totaleAmountcount,paidAmountcount,countBalance, itemIdcount);
+	                 PreparedStatement stmt=insertConnection.prepareStatement(insertSerctionTable);
                      stmt.setString(1, customer_full_name);
                      stmt.setInt(2, phone_number);
                      stmt.setDate(3, invoice_date);
-                     stmt.setInt(5, number_of_items);
+                     stmt.setInt(4, count);
+                     stmt.setDouble(5, totaleAmountcount);
+                     stmt.setDouble(6, paidAmountcount);
+                     stmt.setDouble(7, countBalance);
+                     stmt.setInt(8, itemIdcount);
                       stmt.executeQuery();
                      
  	                    System.out.println("Inserted Successfuly");

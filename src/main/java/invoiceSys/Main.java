@@ -53,14 +53,18 @@ public class Main {
 						Integer InsertOption = scannerMenu.nextInt();
 						if(InsertOption == 1)
 						{
-							System.out.println("How many Item You want to Insert ?");
-							Integer itemsNumberToInsert = scannerMenu.nextInt();
+							
 							System.out.println("Please Enter Shop_Name :");
 		                    String shop_name = scannerMenu.next();
-							allItemServices.insertIntoItemTable(itemsNumberToInsert, shop_name);
+							allItemServices.insertIntoItemTable(shop_name);
 						}
 						else if(InsertOption == 2)
 						{
+							System.out.println("How many Invoice You want to Insert ?");
+							Integer InvoiceNumberToInsert = scannerMenu.nextInt();
+							System.out.println("Please Enter Item Name :");
+		                    String Item_Name = scannerMenu.next();
+							details.insertIntoShopDetailsTable(InvoiceNumberToInsert, Item_Name);
 							
 						}
 						else {
@@ -111,11 +115,10 @@ public class Main {
 						allItemServices.createItemTable();
 						break;
 					case 1:
-						System.out.println("How many Shop You want to Insert ?");
-						Integer itemsNumberToInsert = scannerMenu.nextInt();
+						
 						System.out.println("Please Enter Shop_Name :");
 	                    String shop_name = scannerMenu.next();
-						allItemServices.insertIntoItemTable(itemsNumberToInsert, shop_name);
+						allItemServices.insertIntoItemTable(shop_name);
 
 						break;
 					case 2:

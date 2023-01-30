@@ -53,7 +53,7 @@ public class AllItemServices {
 
 	}
 
-	public void insertIntoItemTable(int shopNumberToInsert, String Shop_Name) {
+	public void insertIntoItemTable(String Shop_Name) {
 		try {
 			Scanner scanner = new Scanner(System.in);
 
@@ -74,7 +74,7 @@ public class AllItemServices {
 
 				insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
 						Constants.USER_PASSWORD);
-				for (int i = 0; i < shopNumberToInsert; i++) {
+			
 					System.out.println("Please Enter Item Name :");
 					String item_name = scanner.next();
 					System.out.println("Please Enter Price :");
@@ -105,7 +105,7 @@ public class AllItemServices {
 
 					System.out.println("Inserted Successfuly");
 
-				}
+				
 				insertConnection.close();
 
 			}

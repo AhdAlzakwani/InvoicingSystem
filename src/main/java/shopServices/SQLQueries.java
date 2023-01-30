@@ -33,6 +33,7 @@ public class SQLQueries {
 			+ " number_of_items INTEGER,"
 			+ " total_amount float,"
 			+ " paid_amount float,"
+			+ " balance float,"
 			+ " Items_id INTEGER foreign key references Items(id), "
 			+ " PRIMARY KEY ( id ))";
 	
@@ -56,9 +57,9 @@ public static String getInsertIntoItemsTable(String item_Name, Double price, Int
 		return INSERT_TABLE_SHOP;
 	}
 
-public static String getInsertIntoInvoicTable(String customer_full_name, Integer phone_number, Date invoice_date,Integer number_of_items,double total_amount,double  paid_amount, Integer Items_id) {
+public static String getInsertIntoInvoicTable(String customer_full_name, Integer phone_number, Date invoice_date,Integer number_of_items,double total_amount,double  paid_amount,double  balance, Integer Items_id) {
 	
-	String INSERT_TABLE_SHOP = "insert into Invoice (Tel, Fax, Email, Website, Shop_id)VALUES(?,?,?,?,?,?,?)";
+	String INSERT_TABLE_SHOP = "insert into Invoice (customer_full_name, phone_number, invoice_date, number_of_items,total_amount, paid_amount,balance, Items_id )VALUES(?,?,?,?,?,?,?,?)";
 	return INSERT_TABLE_SHOP;
 }
 }
