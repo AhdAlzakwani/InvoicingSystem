@@ -1,5 +1,6 @@
 package invoiceSys;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import shopServices.AllItemServices;
@@ -8,7 +9,7 @@ import shopServices.InvoiceDetails;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
 		Scanner scannerMenu = new Scanner(System.in);
 		AllShopServices allShopServices = new AllShopServices();
@@ -122,12 +123,20 @@ public class Main {
 
 						break;
 					case 2:
-
+						System.out.println(" Enter id to be deleted ?");
+						  int id = scannerMenu.nextInt();
+						  AllItemServices.deleteItemsById(id);
 						break;
 					case 3:
+						System.out.println(" Enter id to be Update ?");
+						  int itemId = scannerMenu.nextInt();
+						  System.out.println(" Enter price to be Update ?");
+						  int itemprice = scannerMenu.nextInt();
+						  AllItemServices.updateItemsPriceById(itemId,itemprice);
 
 						break;
 					case 4:
+						allItemServices.readFromTable();
 
 						break;
 					case 5:
@@ -149,9 +158,13 @@ public class Main {
 
 				break;
 			case 5:
+				details.readFromTable();
 
 				break;
 			case 6:
+				System.out.println(" Enter id to be Selected ?");
+				  int invoiceId = scannerMenu.nextInt();
+				  details.readFromInvoiceById(invoiceId);
 
 				break;
 			case 7:

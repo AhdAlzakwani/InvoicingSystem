@@ -6,6 +6,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -208,4 +209,121 @@ public class InvoiceDetails {
 	            System.err.println(ex);
 	        }
 	    }
+	 
+	 public static void readFromTable() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+			Scanner scanner = new Scanner(System.in);
+
+			System.out.println("Please Enter Database URl");
+			String inputUserUrl = scanner.next();
+			System.out.println("Please Enter user Name :");
+			String inputUserName = scanner.next();
+			System.out.println("Please Enter user Password :");
+			String inputUserPass = scanner.next();
+		    Connection conn = null;
+
+			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
+			DriverManager.registerDriver(driver);
+
+			String sqlDB = SQLQueries.getInvoicTable();
+
+			try {
+
+				conn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
+
+				Statement st = conn.createStatement();
+
+				ResultSet m = st.executeQuery(sqlDB);
+
+				if (m.next()) {
+
+					do {
+
+						System.out.println("id : " + m.getInt(1));
+						System.out.println("Coustomer Full Name : " + m.getString(2));
+						System.out.println("Phone Number :" + m.getInt(3));
+						System.out.println("Invoice Date :" + m.getDate(4));
+						System.out.println("Number Of Item :" + m.getInt(5));
+						System.out.println("Totale Amount : " + m.getDouble(6));
+						System.out.println("Paid Amount : " + m.getDouble(7));
+						System.out.println("Balance : " + m.getDouble(8));
+						System.out.println("Item Id :" + m.getInt(9));
+						System.out.println("*********************************");
+						
+						
+
+					} while (m.next());
+
+				} else {
+					System.out.println("No such user id is already registered");
+				}
+
+				conn.close();
+			}
+			
+
+			catch (Exception ex) {
+				System.err.println(ex);
+			}
+
+			
+			}
+	 public static void readFromInvoiceById(int id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+			Scanner scanner = new Scanner(System.in);
+
+			System.out.println("Please Enter Database URl");
+			String inputUserUrl = scanner.next();
+			System.out.println("Please Enter user Name :");
+			String inputUserName = scanner.next();
+			System.out.println("Please Enter user Password :");
+			String inputUserPass = scanner.next();
+		    Connection conn = null;
+
+			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
+			DriverManager.registerDriver(driver);
+
+			String sqlDB = SQLQueries.getInvoicByIdTable(id);
+
+			try {
+
+				conn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
+
+				Statement st = conn.createStatement();
+
+				ResultSet m = st.executeQuery(sqlDB);
+
+				if (m.next()) {
+
+					do {
+
+						System.out.println("id : " + m.getInt(1));
+						System.out.println("Coustomer Full Name : " + m.getString(2));
+						System.out.println("Phone Number :" + m.getInt(3));
+						System.out.println("Invoice Date :" + m.getDate(4));
+						System.out.println("Number Of Item :" + m.getInt(5));
+						System.out.println("Totale Amount : " + m.getDouble(6));
+						System.out.println("Paid Amount : " + m.getDouble(7));
+						System.out.println("Balance : " + m.getDouble(8));
+						System.out.println("Item Id :" + m.getInt(9));
+						System.out.println("*********************************");
+						
+						
+
+					} while (m.next());
+
+				} else {
+					System.out.println("No such user id is already registered");
+				}
+
+				conn.close();
+			}
+			
+
+			catch (Exception ex) {
+				System.err.println(ex);
+			}
+
+			
+			}
 }

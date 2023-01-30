@@ -62,4 +62,36 @@ public static String getInsertIntoInvoicTable(String customer_full_name, Integer
 	String INSERT_TABLE_SHOP = "insert into Invoice (customer_full_name, phone_number, invoice_date, number_of_items,total_amount, paid_amount,balance, Items_id )VALUES(?,?,?,?,?,?,?,?)";
 	return INSERT_TABLE_SHOP;
 }
+
+public static String getDeleteItemsById(int itemId) {
+	
+	String DELETE_TABLE_ITEM = "delete from Items where id ="+itemId;
+	return DELETE_TABLE_ITEM;
+
+}
+public static String getUpdateItemsPriceById(int itemId, int price) {
+	
+	String UPDATE_TABLE_ITEM ="update Items set price ="+price+" where id="+itemId;
+	return UPDATE_TABLE_ITEM;
+
+}
+
+public static String getReadFromTable() {
+	
+	String READ_TABLE_ITEM ="SELECT * FROM Items";
+	return READ_TABLE_ITEM;
+
+}
+public static String getInvoicTable() {
+	
+	String READ_TABLE_INVOICE ="SELECT * FROM Invoice";
+	return READ_TABLE_INVOICE;
+
+}
+public static String getInvoicByIdTable(int invoiseId) {
+	
+	String READ_TABLE_INVOICE ="SELECT * FROM Invoice where id="+invoiseId;
+	return READ_TABLE_INVOICE;
+
+}
 }
