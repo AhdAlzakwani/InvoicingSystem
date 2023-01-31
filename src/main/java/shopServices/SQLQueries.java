@@ -90,7 +90,7 @@ public static String getInvoicTable() {
 }
 public static String getInvoicByIdTable(int invoiseId) {
 	
-	String READ_TABLE_INVOICE ="SELECT * FROM Invoice where id="+invoiseId;
+	String READ_TABLE_INVOICE ="Select * from Invoice INNER JOIN Items ON Items.id = Invoice.Items_id WHERE Invoice.id ="+invoiseId;
 	return READ_TABLE_INVOICE;
 
 }

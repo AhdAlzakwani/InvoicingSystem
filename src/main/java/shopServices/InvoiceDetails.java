@@ -82,7 +82,7 @@ public class InvoiceDetails {
 	                    String customer_first_name = scanner.next();
 	                    System.out.println("Please Enter customer Last name :");
 	                    String customer_last_name = scanner.next();
-	                    String customer_full_name = customer_first_name +""+customer_last_name;
+	                    String customer_full_name = customer_first_name +" "+customer_last_name;
 	                    System.out.println("Please Enter phone_number :");
 	                    Integer phone_number = scanner.nextInt();
 	                    System.out.println("How many you give the Counter  :");
@@ -296,7 +296,7 @@ public class InvoiceDetails {
 				if (m.next()) {
 
 					do {
-
+						System.out.println("Invoice Table");
 						System.out.println("id : " + m.getInt(1));
 						System.out.println("Coustomer Full Name : " + m.getString(2));
 						System.out.println("Phone Number :" + m.getInt(3));
@@ -306,6 +306,16 @@ public class InvoiceDetails {
 						System.out.println("Paid Amount : " + m.getDouble(7));
 						System.out.println("Balance : " + m.getDouble(8));
 						System.out.println("Item Id :" + m.getInt(9));
+						System.out.println("Item Table");
+						System.out.println("Id :" + m.getInt(10));
+						System.out.println("Item Name : " + m.getString(11));
+						System.out.println("Price : " + m.getDouble(12));
+						System.out.println("Quantity :" + m.getInt(13));
+						System.out.println("Shope Details Id :" + m.getInt(14));
+
+
+
+
 						System.out.println("*********************************");
 						
 						

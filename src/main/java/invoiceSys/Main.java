@@ -199,7 +199,14 @@ public class Main {
 
 				break;
 			case 7:
-				System.out.println("Stack POP: " + programStatistic.pop()); 
+				try {
+					Stack<String> st = (Stack<String>) programStatistic;
+				  System.out.println(st);
+				 } catch (Exception e) {
+				  System.out.println(e.getMessage()); 
+				  }
+//				Stack<String> st = (Stack<String>) programStatistic.pop();
+//				System.out.println("Stack POP: " + programStatistic.pop()); 
 				break;
 			case 8:
 				System.out.println(
