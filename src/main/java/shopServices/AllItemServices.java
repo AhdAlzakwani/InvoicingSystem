@@ -12,32 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllItemServices {
-	public static List<String> getShopItemSettings() {
 
-		return Arrays.asList("0- Create Items Table",
-				"1- Add Items",
-				"2- Delete Items",
-				"3- Change Item Price ",
-				"4- Report All Items ", "5- Go Back");
 
-	}
-
-	public void createItemTable() {
+	public void createItemTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please Enter Database URl");
-		String inputUserUrl = scanner.next();
-		System.out.println("Please Enter user Name :");
-		String inputUserName = scanner.next();
-		System.out.println("Please Enter user Password :");
-		String inputUserPass = scanner.next();
+		
 
 		Connection Sectionsconn = null;
 		try {
 
 			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
 			DriverManager.registerDriver(driver);
-			if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
-					&& inputUserPass.equals(Constants.USER_PASSWORD)) {
+			
 
 				Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
 						Constants.USER_PASSWORD);
@@ -50,31 +36,24 @@ public class AllItemServices {
 					System.out.println(" table already Created in given database...");
 				}
 				Sectionsconn.close();
-			}
+			
 		} catch (Exception ex) {
 			System.err.println(ex);
 		}
 
 	}
 
-	public void insertIntoItemTable(String Shop_Name) {
+	public void insertIntoItemTable(String Shop_Name,String USER_URL ,String USER_NAME,String USER_PASSWORD) {
 		try {
 			Scanner scanner = new Scanner(System.in);
 
-			System.out.println("Please Enter Database URl");
-			String inputUserUrl = scanner.next();
-			System.out.println("Please Enter user Name :");
-			String inputUserName = scanner.next();
-			System.out.println("Please Enter user Password :");
-			String inputUserPass = scanner.next();
 
 			Connection insertConnection = null;
 
 			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
 			DriverManager.registerDriver(driver);
 
-			if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
-					&& inputUserPass.equals(Constants.USER_PASSWORD)) {
+		
 
 				insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME,
 						Constants.USER_PASSWORD);
@@ -112,7 +91,7 @@ public class AllItemServices {
 				
 				insertConnection.close();
 
-			}
+			
 
 		} catch (Exception ex) {
 			System.err.println(ex);
@@ -120,22 +99,16 @@ public class AllItemServices {
 	}
 	
 	
-	public static void deleteItemsById(int itemId) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void deleteItemsById(int itemId,String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Please Enter Database URl");
-		String inputUserUrl = scanner.next();
-		System.out.println("Please Enter user Name :");
-		String inputUserName = scanner.next();
-		System.out.println("Please Enter user Password :");
-		String inputUserPass = scanner.next();
+	
 		Connection conn = null;
 		
 		Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
 		DriverManager.registerDriver(driver);
 
-		if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
-				&& inputUserPass.equals(Constants.USER_PASSWORD)) {
+	
 		
 		String sqlDB = SQLQueries.getDeleteItemsById(itemId);
 	
@@ -155,25 +128,17 @@ public class AllItemServices {
 		}
 		
 		conn.close();
-		}
+		
 	}	
 	
-	public static void updateItemsPriceById(int id, int price) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	public static void updateItemsPriceById(int id, int price,String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Please Enter Database URl");
-		String inputUserUrl = scanner.next();
-		System.out.println("Please Enter user Name :");
-		String inputUserName = scanner.next();
-		System.out.println("Please Enter user Password :");
-		String inputUserPass = scanner.next();
 	    Connection conn = null;
 
 		Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
 		DriverManager.registerDriver(driver);
 
-		if (inputUserUrl.equals(Constants.USER_URL) && inputUserName.equals(Constants.USER_NAME)
-				&& inputUserPass.equals(Constants.USER_PASSWORD)) {
 		
 	try {
 		
@@ -201,18 +166,12 @@ public class AllItemServices {
 		System.err.println(ex);
 	}
 		
-}
+
 	}
 	
-	public static void readFromTable() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	public static void readFromTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Please Enter Database URl");
-		String inputUserUrl = scanner.next();
-		System.out.println("Please Enter user Name :");
-		String inputUserName = scanner.next();
-		System.out.println("Please Enter user Password :");
-		String inputUserPass = scanner.next();
 	    Connection conn = null;
 
 		Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();

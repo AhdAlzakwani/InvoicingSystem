@@ -12,38 +12,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import com.google.gson.Gson;
 
 
 public class AllShopServices {
-	   public static List<String> getShopSettings() {
-
-
-	        return Arrays.asList("0- Create Shop Tables",
-	        		"1- Load Data (Items and invoices)",
-	                "2- Set Shop Name",
-	                "3- Set Invoice Header (Tel / Fax / Email / Website) ",
-	                "4- Go Back"
-	        );
-
-	    }
+	  
 	   
-	   public void createShopTable() {
+	   public void createShopTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) {
 
 
 	        Connection Sectionsconn = null;
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
+	        	
 	            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
 	                    .newInstance();
 	            DriverManager.registerDriver(driver);
-                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 
 	            Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
@@ -57,7 +40,7 @@ public class AllShopServices {
 	                System.out.println(" table Shop already Created in given database...");
 	            }
 	            Sectionsconn.close();
-                }
+                
 	        } catch (Exception ex) {
 	            System.err.println(ex);
 	        }
@@ -66,22 +49,16 @@ public class AllShopServices {
 
 
 	    }
-	   public void createShopDetailsTable() {
+	   public void createShopDetailsTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) {
 
 
 	        Connection Sectionsconn = null;
 	        try {
                 Scanner scanner = new Scanner(System.in);
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
+	        
 	            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
 	                    .newInstance();
 	            DriverManager.registerDriver(driver);
-                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 
 	            Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
@@ -95,7 +72,7 @@ public class AllShopServices {
 	                System.out.println(" table Shop Details already Created in given database...");
 	            }
 	            Sectionsconn.close();
-                }
+                
 	        } catch (Exception ex) {
 	            System.err.println(ex);
 	        }
@@ -107,18 +84,11 @@ public class AllShopServices {
 
 
 
-	   public void insertIntoShopTable(int shopNumberToInsert){
+	   public void insertIntoShopTable(int shopNumberToInsert, String USER_URL ,String USER_NAME,String USER_PASSWORD){
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
 
-	        	
-	        	
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
+	     
 	        		        
 
 	                Connection insertConnection = null;
@@ -127,7 +97,6 @@ public class AllShopServices {
 	                        .newInstance();
 	                DriverManager.registerDriver(driver);
 	                
-	                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 	                	
 	                	
 	                insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
@@ -150,25 +119,17 @@ public class AllShopServices {
 	                    insertConnection.close();
 	                
 	                
-	            }
+	            
 	        
 	        } catch (Exception ex) {
 	            System.err.println(ex);
 	        }
 	    }
 
-	   public void insertIntoShopDetailsTable(int shopNumberToInsert, String Shop_Name){
+	   public void insertIntoShopDetailsTable(int shopNumberToInsert, String Shop_Name, String USER_URL ,String USER_NAME,String USER_PASSWORD){
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
 
-	        	
-	        	
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
 	        		        
 
 	                Connection insertConnection = null;
@@ -177,7 +138,6 @@ public class AllShopServices {
 	                        .newInstance();
 	                DriverManager.registerDriver(driver);
 	                
-	                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 	                	
 	                	
 	                insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
@@ -223,7 +183,7 @@ public class AllShopServices {
 	                    insertConnection.close();
 	                
 	                
-	            }
+	            
 	        
 	        } catch (Exception ex) {
 	            System.err.println(ex);

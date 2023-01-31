@@ -10,28 +10,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import invoiceSys.Invoice;
+
 public class InvoiceDetails {
-	 public void createInvoiceTable() {
+	 public void createInvoiceTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) {
 
 
 	        Connection Sectionsconn = null;
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
+
 	            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
 	                    .newInstance();
 	            DriverManager.registerDriver(driver);
 	            
 	            
-                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 
 	            
-	            Sectionsconn = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
+	      Sectionsconn = Constants.getDatabaseConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
          Statement st = Sectionsconn.createStatement();
 	            int m = st.executeUpdate(SQLQueries.CREATE_TABLE_Invoice);
 	            if (m >= 1) {
@@ -41,7 +37,7 @@ public class InvoiceDetails {
 	                System.out.println(" table already Created in given database...");
 	            }
 	            Sectionsconn.close();
-                }
+                
 	        } catch (Exception ex) {
 	            System.err.println(ex);
 	        }
@@ -53,18 +49,10 @@ public class InvoiceDetails {
 	 
 	
 	
-	 public void insertIntoShopDetailsTable(int shopNumberToInsert, String itemName){
+	 public void insertIntoShopDetailsTable(int shopNumberToInsert, String itemName,String USER_URL ,String USER_NAME,String USER_PASSWORD){
 	        try {
 	        	Scanner scanner = new Scanner(System.in);
-	        
-	        	
-	        	
-	        	System.out.println("Please Enter Database URl");
-	        	String inputUserUrl = scanner.next();
-	        	System.out.println("Please Enter user Name :");
-	        	String inputUserName = scanner.next();
-	        	System.out.println("Please Enter user Password :");
-	        	String inputUserPass = scanner.next();
+
 	        		        
 
 	                Connection insertConnection = null;
@@ -73,13 +61,16 @@ public class InvoiceDetails {
 	                        .newInstance();
 	                DriverManager.registerDriver(driver);
 	                
-	                if(inputUserUrl.equals(Constants.USER_URL)&& inputUserName.equals(Constants.USER_NAME) && inputUserPass.equals(Constants.USER_PASSWORD)) {
 	                	
 	                	
 	                insertConnection = DriverManager.getConnection(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 	                for(int i=0; i<shopNumberToInsert;i++) {
+	                	
+	        	        Invoice invoice = new Invoice();
+
 	                	System.out.println("Please Enter customer First name :");
 	                    String customer_first_name = scanner.next();
+	                    
 	                    System.out.println("Please Enter customer Last name :");
 	                    String customer_last_name = scanner.next();
 	                    String customer_full_name = customer_first_name +" "+customer_last_name;
@@ -203,22 +194,16 @@ public class InvoiceDetails {
 	                    insertConnection.close();
 	                
 	                
-	            }
+	            
 	        
 	        } catch (Exception ex) {
 	            System.err.println(ex);
 	        }
 	    }
 	 
-	 public static void readFromTable() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	 public static void readFromTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 			Scanner scanner = new Scanner(System.in);
 
-			System.out.println("Please Enter Database URl");
-			String inputUserUrl = scanner.next();
-			System.out.println("Please Enter user Name :");
-			String inputUserName = scanner.next();
-			System.out.println("Please Enter user Password :");
-			String inputUserPass = scanner.next();
 		    Connection conn = null;
 
 			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
@@ -268,15 +253,9 @@ public class InvoiceDetails {
 
 			
 			}
-	 public static void readFromInvoiceById(int id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	 public static void readFromInvoiceById(int id,String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 			Scanner scanner = new Scanner(System.in);
 
-			System.out.println("Please Enter Database URl");
-			String inputUserUrl = scanner.next();
-			System.out.println("Please Enter user Name :");
-			String inputUserName = scanner.next();
-			System.out.println("Please Enter user Password :");
-			String inputUserPass = scanner.next();
 		    Connection conn = null;
 
 			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();
@@ -337,15 +316,9 @@ public class InvoiceDetails {
 			
 			}
 	 
-	 public static void reportTable() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	 public static void reportTable(String USER_URL ,String USER_NAME,String USER_PASSWORD) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 			Scanner scanner = new Scanner(System.in);
 
-			System.out.println("Please Enter Database URl");
-			String inputUserUrl = scanner.next();
-			System.out.println("Please Enter user Name :");
-			String inputUserName = scanner.next();
-			System.out.println("Please Enter user Password :");
-			String inputUserPass = scanner.next();
 		    Connection conn = null;
 
 			Driver driver = (Driver) Class.forName(Constants.JDBC_DRIVER_SQL_SERVER).newInstance();

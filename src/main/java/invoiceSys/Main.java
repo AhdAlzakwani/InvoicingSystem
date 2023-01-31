@@ -8,6 +8,7 @@ import javax.swing.Popup;
 
 import shopServices.AllItemServices;
 import shopServices.AllShopServices;
+import shopServices.Constants;
 import shopServices.InvoiceDetails;
 
 public class Main {
@@ -24,7 +25,14 @@ public class Main {
 		boolean exitFlagMainMenu = true;
 		boolean exitFlagShopSittingMenu = true;
 		boolean exitFlagShopItemSittingMenu = true;
-
+		System.out.println("Enter Url Connection:");
+		String urlConnection = scannerMenu.next();
+		System.out.println("Enter User NAme: ");
+		String userName = scannerMenu.next();
+		System.out.println("Enter User Password: ");
+		String userPassword =scannerMenu.next();
+		if(urlConnection.equals(Constants.USER_URL)&& userName.equals(Constants.USER_NAME)&& userPassword.equals(Constants.USER_PASSWORD))
+		{
 		while (exitFlagMainMenu) {
 
 			for (String x : Menu.getMenuArray()) {
@@ -38,11 +46,13 @@ public class Main {
 			String soptionForMainMenu = String.valueOf(optionForMainMenu);
 			programStatistic.push(soptionForMainMenu);
 			switch (optionForMainMenu) {
-
+			case 0:
+				Constants.getDatabaseConnection(userName, soptionForMainMenu, userPassword);
+				break;
 			case 1:
 				while (exitFlagShopSittingMenu) {
 
-					for (String x : AllShopServices.getShopSettings()) {
+					for (String x : Menu.getShopSettings()) {
 						System.out.println(x);
 					}
 					System.out.println("WELCOME TO SHOP SITTING");
@@ -54,8 +64,10 @@ public class Main {
 					programStatistic.push(soptionForShopItemSittingMenu);
 					switch (optionForShopItemSittingMenu) {
 					case 0:
-						allShopServices.createShopTable();
-						allShopServices.createShopDetailsTable();
+						allShopServices.createShopTable(Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
+						allShopServices.createShopDetailsTable(Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 						break;
 					case 1:
 						System.out.println(
@@ -68,7 +80,8 @@ public class Main {
 							System.out.println("Please Enter Shop_Name :");
 							String shop_name = scannerMenu.next();
 							programStatistic.push(shop_name);
-							allItemServices.insertIntoItemTable(shop_name);
+							allItemServices.insertIntoItemTable(shop_name, Constants.USER_URL, Constants.USER_NAME,
+									Constants.USER_PASSWORD);
 						} else if (InsertOption == 2) {
 							System.out.println("How many Invoice You want to Insert ?");
 							Integer InvoiceNumberToInsert = scannerMenu.nextInt();
@@ -77,7 +90,8 @@ public class Main {
 							System.out.println("Please Enter Item Name :");
 							String Item_Name = scannerMenu.next();
 							programStatistic.push(Item_Name);
-							details.insertIntoShopDetailsTable(InvoiceNumberToInsert, Item_Name);
+							details.insertIntoShopDetailsTable(InvoiceNumberToInsert, Item_Name, Constants.USER_URL,
+									Constants.USER_NAME, Constants.USER_PASSWORD);
 
 						} else {
 							System.out.println("Only 1 Or 2");
@@ -91,7 +105,8 @@ public class Main {
 						String sshopNumberToInsert = String.valueOf(shopNumberToInsert);
 						programStatistic.push(sshopNumberToInsert);
 
-						allShopServices.insertIntoShopTable(shopNumberToInsert);
+						allShopServices.insertIntoShopTable(shopNumberToInsert, Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 
 						break;
 					case 3:
@@ -103,7 +118,8 @@ public class Main {
 						System.out.println("Please Enter Shop_Name :");
 						String shop_name = scannerMenu.next();
 						programStatistic.push(shop_name);
-						allShopServices.insertIntoShopDetailsTable(shopDetailsNumberToInsert, shop_name);
+						allShopServices.insertIntoShopDetailsTable(shopDetailsNumberToInsert, shop_name,
+								Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 						break;
 					case 4:
@@ -120,7 +136,7 @@ public class Main {
 			case 2:
 				while (exitFlagShopItemSittingMenu) {
 
-					for (String x : allItemServices.getShopItemSettings()) {
+					for (String x : Menu.getShopItemSettings()) {
 						System.out.println(x);
 					}
 					System.out.println("WELCOME TO SHOP ITEM SITTING");
@@ -134,7 +150,8 @@ public class Main {
 
 					switch (optionForShopSittingMenu) {
 					case 0:
-						allItemServices.createItemTable();
+						allItemServices.createItemTable(Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 						break;
 					case 1:
 
@@ -142,7 +159,8 @@ public class Main {
 						String shop_name = scannerMenu.next();
 						programStatistic.push(shop_name);
 
-						allItemServices.insertIntoItemTable(shop_name);
+						allItemServices.insertIntoItemTable(shop_name, Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 
 						break;
 					case 2:
@@ -150,7 +168,8 @@ public class Main {
 						int id = scannerMenu.nextInt();
 						String sid = String.valueOf(id);
 						programStatistic.push(sid);
-						AllItemServices.deleteItemsById(id);
+						AllItemServices.deleteItemsById(id, Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 						break;
 					case 3:
 						System.out.println(" Enter id to be Update ?");
@@ -161,11 +180,12 @@ public class Main {
 						int itemprice = scannerMenu.nextInt();
 						String sitemprice = String.valueOf(itemprice);
 						programStatistic.push(sitemprice);
-						AllItemServices.updateItemsPriceById(itemId, itemprice);
+						AllItemServices.updateItemsPriceById(itemId, itemprice, Constants.USER_URL, Constants.USER_NAME,
+								Constants.USER_PASSWORD);
 
 						break;
 					case 4:
-						allItemServices.readFromTable();
+						allItemServices.readFromTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 						break;
 					case 5:
@@ -180,14 +200,14 @@ public class Main {
 
 				break;
 			case 3:
-				details.createInvoiceTable();
+				details.createInvoiceTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 				break;
 			case 4:
-				details.reportTable();
+				details.reportTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 				break;
 			case 5:
-				details.readFromTable();
+				details.readFromTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 				break;
 			case 6:
@@ -195,16 +215,17 @@ public class Main {
 				int invoiceId = scannerMenu.nextInt();
 				String sinvoiceId = String.valueOf(invoiceId);
 				programStatistic.push(sinvoiceId);
-				details.readFromInvoiceById(invoiceId);
+				details.readFromInvoiceById(invoiceId, Constants.USER_URL, Constants.USER_NAME,
+						Constants.USER_PASSWORD);
 
 				break;
 			case 7:
 				try {
 					Stack<String> st = (Stack<String>) programStatistic;
-				  System.out.println(st);
-				 } catch (Exception e) {
-				  System.out.println(e.getMessage()); 
-				  }
+					System.out.println(st);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 //				Stack<String> st = (Stack<String>) programStatistic.pop();
 //				System.out.println("Stack POP: " + programStatistic.pop()); 
 				break;
@@ -228,6 +249,11 @@ public class Main {
 
 		}
 		exitFlagMainMenu = false;
+	}
+	else {
+		System.out.println("Sorry Wrong Connection");
+
+	}
 	}
 
 }
