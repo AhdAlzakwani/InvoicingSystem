@@ -68,9 +68,7 @@ public class Main {
 					&& userPassword.equals(Constants.USER_PASSWORD)) {
 				while (exitFlagMainMenu) {
 
-					for (String x : Menu.getShowMenu()) {
-						System.out.println(x);
-					}
+					Menu.getShowMenu(1);
 					System.out.println("************************");
 					System.out.println("Select Only One Option :");
 					System.out.println("************************");
@@ -95,9 +93,7 @@ public class Main {
 						countMenuSelected(caseName,count);
 						while (exitFlagShopSittingMenu) {
 
-							for (String x : Menu.getShopSettings()) {
-								System.out.println(x);
-							}
+							Menu.getShowMenu(2);
 							System.out.println("WELCOME TO SHOP SITTING");
 							System.out.println("************************");
 							System.out.println("Select Only One Option :");
@@ -244,9 +240,7 @@ public class Main {
 						countMenuSelected(caseName,count);
 						while (exitFlagShopItemSittingMenu) {
 
-							for (String x : Menu.getShopItemSettings()) {
-								System.out.println(x);
-							}
+							Menu.getShowMenu(3);
 							System.out.println("WELCOME TO SHOP ITEM SITTING");
 							System.out.println("************************");
 							System.out.println("Select Only One Option :");
