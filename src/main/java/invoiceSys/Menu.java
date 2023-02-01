@@ -1,10 +1,11 @@
 package invoiceSys;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class Menu {
-	   public static List<String> getMenuArray() {
+	   public static List<String> getShowMenu() throws InputMismatchException {
 
 
 	        return Arrays.asList("0- Connect to Database",
@@ -23,10 +24,10 @@ public class Menu {
 	   public static List<String> getShopSettings() {
 
 			return Arrays.asList("0- Create Items Table",
-					"1- Add Items",
-					"2- Delete Items",
-					"3- Change Item Price ",
-					"4- Report All Items ", "5- Go Back");
+					"1- Load Data (Items and invoices)", 
+					"2- Set Shop Name (data should be saved)",  
+					"3- Set Invoice Header (Tel / Fax / Email / Website) (Data should be saved)",  
+					"4- Go Back");
 
 		}
 	   

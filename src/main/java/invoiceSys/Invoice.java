@@ -11,6 +11,7 @@ public class Invoice {
 			Double total_amount;
 			Double paid_amount;
 			Double balance;
+			Item[] Item;
 			public String getCustomer_full_name() {
 				return customer_full_name;
 			}
