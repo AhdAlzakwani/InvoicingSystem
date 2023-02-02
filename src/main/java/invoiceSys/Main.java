@@ -15,17 +15,24 @@ import shopServices.Constants;
 import shopServices.InvoiceDetails;
 
 public class Main {
-	public static HashMap<String, Integer> countMenuSelected(String caseName, Integer count) {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		
-		map.put(caseName, count);
-		count = count++;
-		return map;
+	public static Map<String, Integer> countMenuSelected() {
+		HashMap<String, Integer> countt = new HashMap<String, Integer>();
+		countt.put("0- Connect to Database", 0);
+		countt.put("1- Shop Settings", 0);
+		countt.put("2- Manage Shop Items", 0);
+		countt.put("3- Create New Invoice", 0);
+		countt.put("4- Report (No Of Items, No of Invoices,Total Sales)", 0);
+		countt.put("5- Report: All Invoices", 0);
+		countt.put("6- Search (1) Invoice", 0);
+		countt.put("7- Program Statistics", 0);
+		countt.put("8- Exit", 0);
+
+		return countt;
 	}
 
 	public static void main(String[] args)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-
+		Map<String, Integer> countt = countMenuSelected();
 		Scanner scannerMenu = new Scanner(System.in);
 		AllShopServices allShopServices = new AllShopServices();
 		AllItemServices allItemServices = new AllItemServices();
@@ -82,15 +89,12 @@ public class Main {
 					String soptionForMainMenu = String.valueOf(optionForMainMenu);
 					switch (optionForMainMenu) {
 					case 0:
-						 caseName = "Connect to Database";
-						 count = 1;
-						countMenuSelected(caseName,count);
+						countt.put("0- Connect to Database", countt.get("0- Connect to Database") + 1);
 						Constants.getDatabaseConnection(userName, soptionForMainMenu, userPassword);
 						break;
 					case 1:
-						 caseName = "Shop Settings";
-						 count = 1;
-						countMenuSelected(caseName,count);
+						countt.put("1- Shop Settings", countt.get("1- Shop Settings") + 1);
+
 						while (exitFlagShopSittingMenu) {
 
 							Menu.getShowMenu(2);
@@ -115,10 +119,9 @@ public class Main {
 										Constants.USER_PASSWORD);
 								break;
 							case 1:
-								 
-								 caseName = "Load Data (Items and invoices)";
-								 count = 1;
-								countMenuSelected(caseName,count);
+
+								caseName = "Load Data (Items and invoices)";
+								count = 1;
 								Integer InsertOption = 0;
 								System.out.println(
 										"Do you want to insert Items? If yes, press 1 , if you want to insert invoices, then press 2");
@@ -174,9 +177,8 @@ public class Main {
 
 								break;
 							case 2:
-								 caseName = "Set Shop Name (data should be saved)";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								caseName = "Set Shop Name (data should be saved)";
+								count = 1;
 								System.out.println("How many Shop You want to Insert ?");
 								Integer shopNumberToInsert = 0;
 								try {
@@ -194,8 +196,7 @@ public class Main {
 								break;
 							case 3:
 								caseName = "Set Invoice Header (Tel / Fax / Email / Website) (Data should be saved)";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								System.out.println("How many Shop You want to Insert ?");
 								Integer shopDetailsNumberToInsert = 0;
 								try {
@@ -223,7 +224,6 @@ public class Main {
 								break;
 							case 4:
 								caseName = "Go Back";
-								countMenuSelected(caseName,count);
 								exitFlagMainMenu = true;
 								exitFlagShopSittingMenu = false;
 								break;
@@ -235,9 +235,8 @@ public class Main {
 
 						break;
 					case 2:
-						caseName = "Manage Shop Items";
-						 count = 1;
-						countMenuSelected(caseName,count);
+						countt.put("2- Manage Shop Items", countt.get("2- Manage Shop Items") + 1);
+
 						while (exitFlagShopItemSittingMenu) {
 
 							Menu.getShowMenu(3);
@@ -252,15 +251,13 @@ public class Main {
 							switch (optionForShopSittingMenu) {
 							case 0:
 								caseName = "Create Items Table";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								allItemServices.createItemTable(Constants.USER_URL, Constants.USER_NAME,
 										Constants.USER_PASSWORD);
 								break;
 							case 1:
 								caseName = "Add Items";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								System.out.println("Please Enter Shop_Name :");
 								String shop_name = scannerMenu.next();
 
@@ -270,8 +267,7 @@ public class Main {
 								break;
 							case 2:
 								caseName = "Delete Items";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								System.out.println(" Enter id to be deleted ?");
 								int id = scannerMenu.nextInt();
 								String sid = String.valueOf(id);
@@ -280,8 +276,7 @@ public class Main {
 								break;
 							case 3:
 								caseName = "Change Item Price";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								System.out.println(" Enter id to be Update ?");
 								int itemId = scannerMenu.nextInt();
 								String sitemId = String.valueOf(itemId);
@@ -294,17 +289,15 @@ public class Main {
 								break;
 							case 4:
 								caseName = "Report All Items";
-								 count = 1;
-								countMenuSelected(caseName,count);
+								count = 1;
 								allItemServices.readFromTable(Constants.USER_URL, Constants.USER_NAME,
 										Constants.USER_PASSWORD);
 
 								break;
 							case 5:
 								caseName = "Go Back";
-								 count = 1;
+								count = 1;
 
-								countMenuSelected(caseName,count);
 								exitFlagMainMenu = true;
 								exitFlagShopItemSittingMenu = false;
 								break;
@@ -316,28 +309,26 @@ public class Main {
 
 						break;
 					case 3:
-						caseName = "Create New Invoice";
-						 count = 1;
-						countMenuSelected(caseName,count);
+						countt.put("3- Create New Invoice", countt.get("3- Create New Invoice") + 1);
+
+					
 						details.createInvoiceTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 						break;
 					case 4:
-						caseName = "Report (No Of Items, No of Invoices, Total Sales)";
-						 count = 1;
-						countMenuSelected(caseName,count);						details.reportTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
+						countt.put("4- Report (No Of Items, No of Invoices,Total Sales)", countt.get("4- Report (No Of Items, No of Invoices,Total Sales)") + 1);
+
+						details.reportTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 						break;
 					case 5:
-						caseName = "Report: All Invoices";
-						 count = 1;
-						countMenuSelected(caseName,count);	
+						countt.put("5- Report: All Invoices", countt.get("5- Report: All Invoices") + 1);
+
 						details.readFromTable(Constants.USER_URL, Constants.USER_NAME, Constants.USER_PASSWORD);
 
 						break;
 					case 6:
-						caseName = "Search (1) Invoice";
-						 count = 1;
-						countMenuSelected(caseName,count);
+						countt.put("6- Search (1) Invoice", countt.get("6- Search (1) Invoice") + 1);
+
 						System.out.println(" Enter id to be Selected ?");
 						int invoiceId = scannerMenu.nextInt();
 						String sinvoiceId = String.valueOf(invoiceId);
@@ -346,21 +337,16 @@ public class Main {
 
 						break;
 					case 7:
-						caseName = "Program Statistics ";
-						 count = 1;
-						countMenuSelected(caseName,count);
-						System.out.println(countMenuSelected(caseName,count));
-						
-						for(Map.Entry<String,Integer> entry:countMenuSelected(caseName,count).entrySet()){
-							
-		                    System.out.println("   "+ entry.getKey() +"  " + entry.getValue());
-		    }
-						
+						countt.put("7- Program Statistics", countt.get("7- Program Statistics" )+ 1);
+						for (Map.Entry<String, Integer> value : countt.entrySet()) {
+							System.out.println(value.getKey() + " occurs : " + value.getValue());
+						}
+					
+
 						break;
 					case 8:
-						caseName = "Exit";
-						count=1 ;
-						countMenuSelected(caseName,count);
+						countt.put("8- Exit", countt.get("8- Exit" )+ 1);
+
 						System.out.println(
 								"Are you sure you want to exit? If yes, program ends, if No , then main menu reprinted again");
 						String optionFlagMainMenu = scannerMenu.next();
